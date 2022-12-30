@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MyGitHub</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body
+    style="background-image: url(https://th.bing.com/th/id/R.c6a2abef562059e0421657e802fbbe4d?rik=Gw3N6WY6JgDW5Q&pid=ImgRaw&r=0);background-size: cover;">
+    <script>
+
+        var lanlan=null
+        //در این تابع تعداد تکرار های زبان هارا بدست آورده و اونی که بیشترین تکرار را دارد برگردانده میشود
+        //بین 5 تا ریپازیتوری آخر (اگر کمتر از 5 تا بود هم هندل میشود.)
+        function findBest(lan_time , index){
+
+            const list_freq=[]
+            for (let i = 0; i < index; i++) {
+                list_freq[i]=0;
+                let lan = lan_time[i][1];
+                for(let j =0;j< index; j++){
+                    if(lan_time[j][1] = lan){
+                        list_freq[i]++;
+                    }
+                }
+            } 
+            let max = 0;
+            let max_index=0;
+            for(let i = 0 ; i< index ; i++){
+                if(list_freq[i]>max){
+                    max=list_freq[i];
+                    max_index = i ;
+                }
+            }
+            lanlan = lan_time[max_index][1]
+
+            
+
+        }
+        //این تابع یک ریکوئست برای بدست آوردن ریپازیتوری را انجام میدهدو در یک لیست از تاپل های دوتایی نگه داری میشود
+        // تاپل ها سورت شده و برعکس میکنیم تا اونایی که تاریخ پوش نزدیک تری دارند بالای لیست باشند
+        //چک میشود که تعداد ریپازیتوری ها چندتاس
+        //اگر تعداد ریپ ها بیشتر از 5 تا باشد 5 تا ریپ میدهیم و اگر گمتر باشد همان تعداد را بررسی میکنیم
+        //در آخر آبجکتی ساخته و آن را در لوکال استوریج ذخیره میکنیم
+        async function checkfreq(id ,names ,repos_url) {
+            const response2 = await fetch(repos_url);
+            const names2 = await response2.json();
+            if(names2.length != 0){
+                var lan_time = [];
+                for (var i=0; i < names2.length; i++) {
+                    if (names2[i]['language'] != null){
+                        var person = [names2[i]['pushed_at'] , names2[i]['language']  ];
+                        lan_time.push(person);
+                    }
+                    
+                }
+                lan_time.sort();
+                lan_time.reverse();
+                if(lan_time.length !=0){
+                    if(lan_time.length<5){
+                        findBest(lan_time ,lan_time.length);
+                        
+                    }
+                    else if(lan_time.length>5){
+                        findBest(lan_time , 5);
+
+    
+                    }
+
+                }
+                
+            }
+            if(lanlan){
+                document.getElementById("language:").style.display = 'flex';
+
+            }
+            document.getElementById("language").innerHTML = lanlan;
+
+            var obj = {'avatar_url': names.avatar_url, 'name' : names.name ,'blog':names.blog , 'bio':names.bio ,'location':names.location , 'lanlanlan':lanlan }
+
+            window.localStorage.setItem(id, JSON.stringify(obj));
+        }
+        //این تابع ریکوئست اصلی را به گیت میدهد و اگر خطا باشد (404) آن را به کاربر اعلام میکند
+        //اگر توی لوکال استوریج باشد از آنجا فیلد هارا میخواند
+        //از قابلیت فلکس استفاده شده
+        //چک میکند کهفیلد ها نال هستند یا خیر
+        async function myFunction() {
+            var id = document.getElementById("myText").value;
+            
+                let newObject = window.localStorage.getItem(id);
+            if(newObject != null){
+                console.log("is not null")
+                document.getElementById("info").style.display = 'flex';
+                document.getElementById("sickuser").style.display = 'none';
+                document.getElementById("pic").style.display = 'flex';
+                document.getElementById("name").style.display = 'flex';
+                document.getElementById("blog").style.display = 'flex';
+                document.getElementById("bio").style.display = 'flex';
+                document.getElementById("loc").style.display = 'flex';
+                document.getElementById("local").style.display = 'flex';
+                document.getElementById("language").style.display = 'flex';
+                //////
+                document.getElementById("name:").style.display = 'none';
+                document.getElementById("blog:").style.display = 'none';
+                document.getElementById("location:").style.display = 'none';
+                document.getElementById("language:").style.display = 'none';
+                document.getElementById("bio:").style.display = 'none';
+                if(JSON.parse(newObject).name){
+                    document.getElementById("name:").style.display = 'flex';
+
+                }
+                if(JSON.parse(newObject).blog){
+                    document.getElementById("blog:").style.display = 'flex';
+
+                }
+                if(JSON.parse(newObject).location){
+                    document.getElementById("location:").style.display = 'flex';
+
+                }
+                if(JSON.parse(newObject).lanlanlan){
+                    document.getElementById("language:").style.display = 'flex';
+
+                }
+                if(JSON.parse(newObject).bio){
+                    document.getElementById("bio:").style.display = 'flex';
+
+                }
+
+
+                document.getElementById("pic").src = JSON.parse(newObject).avatar_url;
+                document.getElementById("name").innerHTML = JSON.parse(newObject).name;
+                document.getElementById("blog").innerHTML = JSON.parse(newObject).blog;
+                document.getElementById("bio").innerHTML = JSON.parse(newObject).bio;
+                document.getElementById("loc").innerHTML = JSON.parse(newObject).location;
+                document.getElementById("language").innerHTML = JSON.parse(newObject).lanlanlan;
+                document.getElementById("local").innerHTML= "This id is in local strage";
+
+            }
+                
+                
+            
+            else{
+                const response = await fetch("https://api.github.com/users/" + id);
+            
+            if (response.status == 200){
+                document.getElementById("info").style.display = 'flex';
+                document.getElementById("sickuser").style.display = 'none';
+                //document.getElementById("errorpic").style.display = 'none';
+                document.getElementById("pic").style.display = 'flex';
+                document.getElementById("name").style.display = 'flex';
+                document.getElementById("blog").style.display = 'flex';
+                document.getElementById("bio").style.display = 'flex';
+                document.getElementById("loc").style.display = 'flex';
+                document.getElementById("language").style.display = 'flex';
+                document.getElementById("local").style.display = 'none';
+                ////
+                document.getElementById("name:").style.display = 'none';
+                document.getElementById("blog:").style.display = 'none';
+                document.getElementById("location:").style.display = 'none';
+                document.getElementById("language:").style.display = 'none';
+                document.getElementById("bio:").style.display = 'none';
+                ////
+                const names = await response.json();
+                var pic = names.avatar_url;
+                var name = names.name;
+                var blog = names.blog;
+                var bio = names.bio;
+                var loc = names.location;
+                document.getElementById("pic").src = pic;
+                document.getElementById("name").innerHTML = name;
+                document.getElementById("blog").innerHTML = blog;
+                document.getElementById("bio").innerHTML = bio;
+                document.getElementById("loc").innerHTML = loc;
+                checkfreq(id ,names , names.repos_url);
+                
+                if(name){
+                    document.getElementById("name:").style.display = 'flex';
+                }
+                if(blog){
+                    document.getElementById("blog:").style.display = 'flex';
+
+                }
+                if(location){
+                    document.getElementById("location:").style.display = 'flex';
+
+                }
+                
+                if(bio){
+                    document.getElementById("bio:").style.display = 'flex';
+
+                }
+
+            }
+            else{
+                document.getElementById("info").style.display = 'none';
+                document.getElementById("sickuser").style.display = 'flex';
+                document.getElementById("pic").style.display = 'none';
+                document.getElementById("name").style.display = 'none';
+                document.getElementById("blog").style.display = 'none';
+                document.getElementById("bio").style.display = 'none';
+                document.getElementById("loc").style.display = 'none';
+                document.getElementById("local").style.display = 'none';
+                document.getElementById("language").style.display = 'none';
+                //////
+                document.getElementById("name:").style.display = 'none';
+                document.getElementById("blog:").style.display = 'none';
+                document.getElementById("location:").style.display = 'none';
+                document.getElementById("language:").style.display = 'none';
+                document.getElementById("bio:").style.display = 'none';
+                if(response.status == 404){
+                    document.getElementById("sickuser").innerHTML = 'Error Not Found';
+
+                }
+                else{
+                    document.getElementById("sickuser").innerHTML = 'internal server error';
+
+                }
+                setTimeout(display_none , 3000);
+               
+
+            }
+            }   
+        }
+        //ست تایم کردن برای اینکهه به ارور ***شبکه*** برخورد کرد بعد از 4 ثانیه هاید بشود
+        function display_none (){
+
+            document.getElementById("sickuser").style.display = 'none';
+
+        }
+
+    </script>
+    <div class="main">
+        <div id='info' class="info" style="display:none">
+            
+            
+            <div id="divpicnbl" class="divpicnbl">
+                <div id='divimage' class="divimage">
+                    <img class="image" id="pic" />
+                    <div id="divbio" class="divbio">
+                        <p class="bioo" id = 'bio:' style="display:none">Bio:</p>
+                        <p class="bio" id="bio"style="display:none"></p>
+                    </div>
+                </div>
+                <div id="nbl" class="nbl">
+                    <p class="namee"id = 'name:' style="display:none">Name:</p>
+                    <div class="name" id="name"style="display:none"></div>
+                    <p class="blogg" id = 'blog:' style="display:none">Blog:</p>
+                    <div class="blog"id="blog"style="display:none"></div>
+                    <p class="locationn"id = 'location:' style="display:none">Location:</p>
+                    <div class="location" id="loc"style="display:none"></div>
+                    <p class="languagee"id = 'language:' style="display:none">Language:</p>
+                    <div class="language" id="language"style="display:none"></div>
+                    
+                </div>
+            </div>
+            
+            
+            
+
+        </div>
+        
+        <div id='getID' class="getID">
+             <label class="lable">  Enter The ID :)  </label>
+             <input placeholder="ID" type="text" id="myText"  >
+            
+            <button class="button" onclick="myFunction()">submit</button>
+            <div id="local" class="local">
+                <p class="local" id="local"style="display:none"></p>
+            </div>
+            <div id = 'sickuser'  class= 'sickuser'style="display:none"></div>   
+            
+        </div>    
+    </div>
+
+</body>
+
+</html>

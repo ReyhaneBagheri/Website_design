@@ -1,0 +1,336 @@
+/*
+ساخت ساختار اولیه که دوتا باکس چپ و راست را به صورت افقی قرار میدهیم.
+*/
+.main{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    /*border: 3px solid black;*/
+    
+}
+/*
+ساخت باکس سمت راستی
+که فیلد هاشو عمودی قرار دادیم.
+
+*/
+.getID{
+    padding: 50px;
+    margin: 50px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    border: 3px solid rgb(37, 37, 90);
+    /*قسمت شفاف سازی */
+    background: rgba(228, 204, 204, 0.25);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(6.3px);
+    -webkit-backdrop-filter: blur(6.3px);
+    border: 1px solid rgba(228, 204, 204, 0.41);
+}
+
+/*
+ساخت باکس سمت چپی
+که فیلد هاشو عمودی قرار دادیم.
+(یک فیلد مربوز به دیو عکس و اطلاعات کاربر و یک دیو هم مربوط به بیوی کاربر)
+*/
+.info{
+    
+    display: flex;
+    flex-direction: column;
+    color: rgb(0, 0, 0);
+    padding: 50px;
+    margin: 50px;
+    /*margin-left: 350px;*/
+    border: 3px solid rgb(117, 25, 25);
+    background: rgba(228, 204, 204, 0.25);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(6.3px);
+    -webkit-backdrop-filter: blur(6.3px);
+    border: 1px solid rgba(228, 204, 204, 0.41);
+}
+/* دیو مربوط به عکس و اطلاعات کاربر را بهصورت افقی میسازیم */
+.divpicnbl{
+  display: flex;
+  flex-direction: row;
+
+}
+
+.divimage{
+  padding: 5px;
+  margin: 5px;
+  margin-bottom: 0%;
+}
+
+.nbl{
+  
+  padding: 5px;
+  margin: 5px;
+
+}
+
+
+
+/*.sickuser{
+    color: rgb(0, 0, 0);
+    padding: 50px;
+    margin: 50px;
+    margin-left: 300px;
+}*/
+/* برای ساخت باتن از آپشن مختلفی استفده کردم 
+قابلیت بالا پایین رفتن و تغییر رنگ هنگام کلیک
+*/
+.button {
+    display: inline-block;
+    padding: 4px 65px;
+    font-size: 15px;
+    margin-top: 20px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #da0a8a;
+    border: none;
+    border-radius: 4px;
+    font-family: Serif, Helvetica , sans-serif;
+    /*box-shadow: 0 9px #999;*/
+  }
+  
+  .button:hover {background-color: #250824}
+  
+  .button:active {
+    background-color: #55082c;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+
+
+  input[type=text] {
+    border: none;
+    border-bottom: 2px solid red;
+    padding: 4px 5px;
+    text-align: center;
+    font-family: Serif, Helvetica , sans-serif;
+  }
+
+  .image{
+    border-radius: 100px;
+    width: 10vw;
+
+}
+/* 
+پیغام لوکال استوریج
+*/
+.local{
+  display: flex;
+  padding: 0px 10px;
+  margin-top: 20px;
+  color: #1c011f;
+  font-family: Serif, Helvetica , sans-serif;
+  font-size: small;
+  margin-right: 5px; 
+  background-color: rgb(72, 136, 93);
+  border-radius: 4px; 
+
+}
+/*
+برای اسم و بلاگ و لوکیشن وبیو قابلیت
+
+underline و تغییر رنگ استفاده کردم
+
+*/
+.name{
+  text-align: center;
+  --s: 0.1em;   /* the thickness of the line */
+  --c: #240213; /* the color */
+  margin-top: 5px;
+  color: #0000;
+  padding-bottom: var(--s);
+  background: 
+    linear-gradient(90deg,var(--c) 50%,#000 0) calc(100% - var(--_p,0%))/200% 100%,
+    linear-gradient(var(--c) 0 0) 0% 100%/var(--_p,0%) var(--s) no-repeat;
+  -webkit-background-clip: text,padding-box;
+          background-clip: text,padding-box;
+  transition: 0.5s;
+  font-family: Serif, Helvetica , sans-serif;
+  font-size: small;
+  cursor: pointer;
+  overflow: hidden;
+  max-width: 25ch;
+
+}
+.name:hover {--_p: 100%}
+
+/*
+برای اسم و بلاگ و لوکیشن وبیو قابلیت
+
+underline و تغییر رنگ استفاده کردم
+
+*/
+
+
+.blog{
+  margin-top: 5px;
+  --s: 0.1em;   /* the thickness of the line */
+--c: #240213; /* the color */
+
+color: #0000;
+padding-bottom: var(--s);
+background: 
+  linear-gradient(90deg,var(--c) 50%,#000 0) calc(100% - var(--_p,0%))/200% 100%,
+  linear-gradient(var(--c) 0 0) 0% 100%/var(--_p,0%) var(--s) no-repeat;
+-webkit-background-clip: text,padding-box;
+        background-clip: text,padding-box;
+transition: 0.5s;
+overflow: hidden;
+max-width: 25ch;
+font-family: Serif, Helvetica , sans-serif;
+font-size: small;
+cursor: pointer;
+}
+
+.blog:hover {--_p: 100%}
+
+/*
+برای اسم و بلاگ و لوکیشن وبیو قابلیت
+
+underline و تغییر رنگ استفاده کردم
+
+*/
+.bio{
+  margin-top: 5px;
+
+  --s: 0.1em;   /* the thickness of the line */
+  --c: #240213; /* the color */
+  
+  color: #0000;
+  padding-bottom: var(--s);
+  background: 
+    linear-gradient(90deg,var(--c) 50%,#000 0) calc(100% - var(--_p,0%))/200% 100%,
+    linear-gradient(var(--c) 0 0) 0% 100%/var(--_p,0%) var(--s) no-repeat;
+  -webkit-background-clip: text,padding-box;
+          background-clip: text,padding-box;
+  transition: 0.5s;
+  overflow: hidden;
+  max-width: 25ch;
+  font-family: Serif, Helvetica , sans-serif;
+  font-size:smaller;
+  cursor: pointer;
+ }
+
+ .bio:hover {--_p: 100%}
+
+
+/*
+برای اسم و بلاگ و لوکیشن وبیو قابلیت
+
+underline و تغییر رنگ استفاده کردم
+
+*/
+
+.location{
+  margin-top: 5px;
+   --s: 0.1em;   /* the thickness of the line */
+ --c: #240213; /* the color */
+ 
+ color: #0000;
+ padding-bottom: var(--s);
+ background: 
+   linear-gradient(90deg,var(--c) 50%,#000 0) calc(100% - var(--_p,0%))/200% 100%,
+   linear-gradient(var(--c) 0 0) 0% 100%/var(--_p,0%) var(--s) no-repeat;
+ -webkit-background-clip: text,padding-box;
+         background-clip: text,padding-box;
+ transition: 0.5s;
+ font-family: Serif, Helvetica , sans-serif;
+ font-size: small;
+ cursor: pointer;
+ overflow: hidden;
+ max-width: 25ch;
+
+ }
+
+ .location:hover {--_p: 100%}
+
+/*
+برای زبان پرتکرار نیز از قابلیت 
+underline و تغییر رنگ استفاده کردم
+
+*/
+
+  .language{
+    margin-top: 5px;
+     --s: 0.1em;   /* the thickness of the line */
+   --c: #240213; /* the color */
+   
+   color: #0000;
+   padding-bottom: var(--s);
+   background: 
+     linear-gradient(90deg,var(--c) 50%,#000 0) calc(100% - var(--_p,0%))/200% 100%,
+     linear-gradient(var(--c) 0 0) 0% 100%/var(--_p,0%) var(--s) no-repeat;
+   -webkit-background-clip: text,padding-box;
+           background-clip: text,padding-box;
+   transition: 0.5s;
+   font-family: Serif, Helvetica , sans-serif;
+   font-size: small;
+   cursor: pointer;
+   overflow: hidden;
+   max-width: 25ch;
+  
+   }
+  
+   .language:hover {--_p: 100%}
+
+
+.namee{
+
+  color: #da0a8a;
+}
+.bioo{
+
+  padding: 5px;
+  margin: 5px;
+  color: #da0a8a;
+}
+.blogg{
+
+  color: #da0a8a;
+}
+.locationn{
+
+  color: #da0a8a;
+}
+.languagee{
+
+  color: #da0a8a;
+}
+
+.sickuser{
+  padding: 2px 40px;
+  margin-top: 20px;
+  color: #11040d;
+  font-family: Serif, Helvetica , sans-serif;
+  font-size: small;
+  background-color: rgb(72, 136, 93);
+  border-radius: 4px;
+}
+
+
+   
+
+.divbio{
+  padding: 5px;
+  margin: 5px;
+
+
+}
+
+
+.lable{
+margin-bottom: 10px;
+color: rgb(100, 4, 60);;
+font-family:monospace;
+}
